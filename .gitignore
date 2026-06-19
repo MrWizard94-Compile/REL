@@ -1,0 +1,97 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Type Checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+
+# Linting
+.ruff_cache/
+
+# REL Data
+data/
+*.lock
+*.json.bak
+
+# Logs
+*.log
+
+# Backups
+backups/
+*.bak
+mcp_server.py.bak*
+*.bak_*
+*~
+
+# Broken / scratch artifacts
+*.broken*
+
+# Local debug artifacts
+grep_check.txt
+verify_out.txt
+bridge_check.txt
+schema_sizes.txt
+dep_*.txt
+tool_*.txt
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Documentation
+docs/_build/
+site/
+
+# Archived generated artifacts
+archive/generated/
+
+# Web dashboard
+web-dashboard/node_modules/
+web-dashboard/dist/

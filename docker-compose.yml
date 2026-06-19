@@ -1,0 +1,34 @@
+services:
+  rel-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rel-api
+    environment:
+      REL_PATH: /app/runtime
+      REL_LOG_FORMAT: json
+      REL_LOG_LEVEL: INFO
+      REL_API_AUTH_REQUIRED: "true"
+      REL_ADMIN_USERNAME: ${REL_ADMIN_USERNAME:-admin}
+      REL_ADMIN_PASSWORD: ${REL_ADMIN_PASSWORD:?set REL_ADMIN_PASSWORD}
+      REL_OAUTH2_SECRET: ${REL_OAUTH2_SECRET:?set REL_OAUTH2_SECRET}
+    volumes:
+      - ./data:/app/runtime/data
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  rel-mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rel-mcp-server
+    command: ["python", "mcp_server.py"]
+    environment:
+      REL_PATH: /app/runtime
+      REL_LOG_FORMAT: json
+      REL_LOG_LEVEL: INFO
+      REL_AUTH_REQUIRED: "false"
+    volumes:
+      - ./data:/app/runtime/data
+    restart: unless-stopped

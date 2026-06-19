@@ -1,0 +1,10 @@
+{
+  "name": "github_integration",
+  "version": "1.0.0",
+  "description": "Example GitHub sync plugin template.",
+  "api_version": "1.0",
+  "entrypoint": "main.py",
+  "dependencies": [],
+  "enabled": true,
+  "sandbox_timeout_seconds": 15
+}

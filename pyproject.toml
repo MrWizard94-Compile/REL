@@ -1,0 +1,248 @@
+[build-system]
+requires = ["setuptools>=68.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rel-mcp-server"
+version = "1.0.0"
+description = "REL (Radiant Ether Loom) - Cognitive Architecture MCP Server with 45 Tools"
+authors = [
+    {name = "Corwin", email = "corwin@rel.ai"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+keywords = ["mcp", "cognitive-architecture", "ai", "memory", "learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "mcp==1.0.0",
+    "flask==3.0.1",
+    "flask-cors==4.0.0",
+    "fastapi==0.129.0",
+    "uvicorn==0.41.0",
+    "python-multipart==0.0.22",
+    "sentence-transformers==2.2.2",
+    "faiss-cpu==1.7.4",
+    "numpy==1.24.3",
+    "scikit-learn==1.3.0",
+    "pandas==2.0.3",
+    "python-dateutil==2.8.2",
+    "pydantic==2.5.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "pytest-asyncio==0.21.1",
+    "pytest-cov==4.1.0",
+    "mypy==1.7.1",
+    "ruff==0.1.8",
+    "black==23.12.1",
+    "types-python-dateutil==2.8.19.14",
+    "pre-commit==3.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/corwin/rel"
+Documentation = "https://github.com/corwin/rel/docs"
+Repository = "https://github.com/corwin/rel"
+
+[tool.setuptools]
+py-modules = [
+    "mcp_server",
+    "brain",
+    "brain_typed",
+    "neural_web",
+    "neural_web_typed",
+    "validation_models",
+    "analytics_engine",
+    "plugin_system",
+    "rest_api",
+]
+
+[tool.setuptools.package-data]
+"" = ["py.typed"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--cov=mcp_server",
+    "--cov=brain_typed",
+    "--cov=neural_web_typed",
+    "--cov=validation_models",
+    "--cov=analytics_engine",
+    "--cov=plugin_system",
+    "--cov=rest_api",
+    "--cov-report=html",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+    "--strict-markers",
+    "-v",
+]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+branch = true
+source = [
+    "mcp_server",
+    "brain_typed",
+    "neural_web_typed",
+    "validation_models",
+    "analytics_engine",
+    "plugin_system",
+    "rest_api",
+]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+    "*/venv/*",
+    "setup.py",
+    "mcp_server_typed*.py",
+    "brain.py",
+    "neural_web.py",
+    "manual_test.py",
+    "build_complete_typed.py",
+    "finalize_typed.py",
+    "count_tests.py",
+    "quick_mypy.py",
+    "run_*.py",
+    "validate_integration_tests.py",
+    "verify_tests_ready.py",
+    "test_*.py",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+fail_under = 80
+
+[tool.mypy]
+python_version = "3.10"
+files = [
+    "brain_typed.py",
+    "neural_web_typed.py",
+    "validation_models.py",
+    "analytics_engine.py",
+    "plugin_system.py",
+]
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+show_error_codes = true
+show_column_numbers = true
+pretty = true
+
+# Allow untyped calls for third-party libraries without stubs
+[[tool.mypy.overrides]]
+module = [
+    "faiss.*",
+    "sentence_transformers.*",
+    "sklearn.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["mcp.*"]
+ignore_errors = true
+follow_imports = "skip"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = [
+    ".venv",
+    "venv",
+    "__pycache__",
+    "*.pyc",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+    "DTZ",  # flake8-datetimez
+    "T10",  # flake8-debugger
+    "EM",   # flake8-errmsg
+    "ISC",  # flake8-implicit-str-concat
+    "PIE",  # flake8-pie
+    "PT",   # flake8-pytest-style
+    "RET",  # flake8-return
+    "SIM",  # flake8-simplify
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "PLE",  # pylint errors
+    "PLW",  # pylint warnings
+    "TRY",  # tryceratops
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "ISC001", # single-line-implicit-string-concatenation (conflicts with formatter)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ARG", "PLR2004"]  # Allow unused args and magic values in tests
+"tests/**/*.py" = ["ARG", "PLR2004"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["rel"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''

@@ -1,0 +1,13 @@
+=== MYPY PHASE 1 RESULTS ===
+
+Return code: 2
+
+=== STDOUT ===
+.venv\Lib\site-packages\mcp\client\session.py:594:9: error: Pattern matching is
+only supported in Python 3.10 and greater  [syntax]
+            return None
+            ^
+Found 1 error in 1 file (errors prevented further checking)
+
+
+=== STDERR ===

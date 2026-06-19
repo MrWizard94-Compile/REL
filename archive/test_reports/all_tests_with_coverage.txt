@@ -1,0 +1,480 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\REL\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\REL
+configfile: pyproject.toml
+plugins: anyio-4.12.1, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 176 items
+
+tests/integration/test_mcp_server.py::TestFileLocking::test_file_lock_creates_lock_file PASSED [  0%]
+tests/integration/test_mcp_server.py::TestFileLocking::test_file_lock_releases_on_exit PASSED [  1%]
+tests/integration/test_mcp_server.py::TestFileLocking::test_file_lock_timeout FAILED [  1%]
+tests/integration/test_mcp_server.py::TestFileLocking::test_file_lock_concurrent_access_blocked PASSED [  2%]
+tests/integration/test_mcp_server.py::TestAtomicOperations::test_atomic_write_json_creates_file PASSED [  2%]
+tests/integration/test_mcp_server.py::TestAtomicOperations::test_atomic_write_json_overwrites_existing PASSED [  3%]
+tests/integration/test_mcp_server.py::TestAtomicOperations::test_atomic_write_json_uses_temp_file PASSED [  3%]
+tests/integration/test_mcp_server.py::TestVersioning::test_load_versioned_json_new_file PASSED [  4%]
+tests/integration/test_mcp_server.py::TestVersioning::test_load_versioned_json_existing_file PASSED [  5%]
+tests/integration/test_mcp_server.py::TestVersioning::test_save_versioned_json_increments_version PASSED [  5%]
+tests/integration/test_mcp_server.py::TestVersioning::test_save_versioned_json_detects_conflict PASSED [  6%]
+tests/integration/test_mcp_server.py::TestVersioning::test_atomic_update_retries_on_conflict PASSED [  6%]
+tests/integration/test_mcp_server.py::TestVersioning::test_atomic_update_gives_up_after_max_retries FAILED [  7%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_deep_merge_simple PASSED [  7%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_deep_merge_nested PASSED [  8%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_deep_merge_overwrites_values PASSED [  9%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_calculate_days_since_valid_date FAILED [  9%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_calculate_days_since_empty_string PASSED [ 10%]
+tests/integration/test_mcp_server.py::TestUtilityFunctions::test_calculate_days_since_invalid_format PASSED [ 10%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_get_priority_weight PASSED [ 11%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_get_staleness_multiplier_danger_zone PASSED [ 11%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_get_staleness_multiplier_active_stale PASSED [ 12%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_get_staleness_multiplier_on_hold PASSED [ 13%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_get_staleness_multiplier_complete FAILED [ 13%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_calculate_urgency FAILED [ 14%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_classify_urgency PASSED [ 14%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_analyze_context_pressure_empty_state PASSED [ 15%]
+tests/integration/test_mcp_server.py::TestContextPressure::test_analyze_context_pressure_with_projects PASSED [ 15%]
+tests/integration/test_mcp_server.py::TestContradictionDetection::test_extract_decisions_from_sessions PASSED [ 16%]
+tests/integration/test_mcp_server.py::TestContradictionDetection::test_check_statement_conflict_no_conflict PASSED [ 17%]
+tests/integration/test_mcp_server.py::TestContradictionDetection::test_check_statement_conflict_detects_contradiction FAILED [ 17%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_calculate_momentum_starting PASSED [ 18%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_calculate_momentum_accelerating FAILED [ 18%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_calculate_momentum_stalled PASSED [ 19%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_detect_arc_type_beginning PASSED [ 19%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_detect_arc_type_building_momentum PASSED [ 20%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_detect_arc_type_overcoming_obstacles PASSED [ 21%]
+tests/integration/test_mcp_server.py::TestNarrativeArc::test_get_story_arc_analysis PASSED [ 21%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_infer_energy_level_unknown PASSED [ 22%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_infer_energy_level_high PASSED [ 22%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_infer_energy_level_low PASSED [ 23%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_detect_work_state_deep_focus PASSED [ 23%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_detect_work_state_problem_solving PASSED [ 24%]
+tests/integration/test_mcp_server.py::TestAffectiveTrends::test_get_affective_trends_analysis FAILED [ 25%]
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_load_state_structure PASSED [ 25%]
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_get_state_summary_filters_fields PASSED [ 26%]
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_get_stats_counts_correctly PASSED [ 26%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_create_project_structure PASSED [ 27%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_project_returns_correct_project PASSED [ 27%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_list_projects_filter_by_status PASSED [ 28%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_update_project_modifies_fields PASSED [ 28%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_set_active_project PASSED [ 29%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_active_project_returns_current PASSED [ 30%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_archive_project_changes_status PASSED [ 30%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_project_stats PASSED [ 31%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_log_session_creates_session PASSED [ 31%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_get_session_history_returns_recent PASSED [ 32%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_get_current_session_returns_latest PASSED [ 32%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_end_session_changes_status PASSED [ 33%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_search_sessions_finds_matches PASSED [ 34%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_log_win_structure PASSED [ 34%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_capture_idea_adds_to_list PASSED [ 35%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_update_focus_changes_context PASSED [ 35%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_insights_with_urgent_project PASSED [ 36%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_predict_cold_projects_identifies_stale PASSED [ 36%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_check_for_conflict_with_sessions FAILED [ 37%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_story_arc_with_active_sessions PASSED [ 38%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_affective_trends_with_achievements PASSED [ 38%]
+tests/integration/test_tool_handlers.py::TestContextTools::test_search_files_pattern_matching PASSED [ 39%]
+tests/integration/test_tool_handlers.py::TestContextTools::test_get_loading_preview_counts_matches PASSED [ 39%]
+tests/integration/test_tool_handlers.py::TestAdvancedTools::test_get_analytics_structure PASSED [ 40%]
+tests/integration/test_tool_handlers.py::TestAdvancedTools::test_create_snapshot_naming PASSED [ 40%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_project_nonexistent PASSED [ 41%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_update_project_nonexistent PASSED [ 42%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_archive_project_nonexistent PASSED [ 42%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_project_stats_nonexistent PASSED [ 43%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_current_session_empty_log PASSED [ 43%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_calculate_days_since_invalid_date PASSED [ 44%]
+tests/integration/test_tool_handlers.py::TestConcurrentAccess::test_multiple_updates_use_locking PASSED [ 44%]
+tests/integration/test_tool_handlers.py::TestConcurrentAccess::test_version_conflict_retry PASSED [ 45%]
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_creates_paths PASSED [ 46%]
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_sets_defaults PASSED [ 46%]
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_creates_directory PASSED [ 47%]
+tests/test_brain.py::TestRELBrainStats::test_get_stats_empty_brain PASSED [ 47%]
+tests/test_brain.py::TestRELBrainStats::test_get_stats_with_documents PASSED [ 48%]
+tests/test_brain.py::TestRELBrainIngestion::test_ingest_text_without_initialization PASSED [ 48%]
+tests/test_brain.py::TestRELBrainIngestion::test_ingest_from_state_and_log_structure PASSED [ 49%]
+tests/test_brain.py::TestRELBrainSearch::test_search_empty_brain_returns_empty_list PASSED [ 50%]
+tests/test_brain.py::TestRELBrainSearch::test_search_respects_limit_parameter PASSED [ 50%]
+tests/test_brain.py::TestRELBrainSaveLoad::test_save_index_creates_files PASSED [ 51%]
+tests/test_brain.py::TestRELBrainSaveLoad::test_save_load_documents_roundtrip PASSED [ 51%]
+tests/test_brain.py::TestGetBrainSingleton::test_get_brain_returns_brain_instance PASSED [ 52%]
+tests/test_brain.py::TestGetBrainSingleton::test_get_brain_returns_same_instance PASSED [ 52%]
+tests/test_brain.py::TestRELBrainIntegration::test_full_initialization_with_dependencies SKIPPEDies) [ 53%]
+tests/test_brain.py::TestRELBrainIntegration::test_ingest_and_search_workflow SKIPPEDes) [ 53%]
+tests/test_neural_web.py::TestNeuron::test_neuron_initialization PASSED  [ 54%]
+tests/test_neural_web.py::TestNeuron::test_neuron_initialization_with_created_date PASSED [ 55%]
+tests/test_neural_web.py::TestNeuron::test_neuron_activate PASSED        [ 55%]
+tests/test_neural_web.py::TestNeuron::test_neuron_multiple_activations PASSED [ 56%]
+tests/test_neural_web.py::TestNeuron::test_neuron_to_dict PASSED         [ 56%]
+tests/test_neural_web.py::TestNeuron::test_neuron_from_dict PASSED       [ 57%]
+tests/test_neural_web.py::TestNeuron::test_neuron_roundtrip PASSED       [ 57%]
+tests/test_neural_web.py::TestSynapse::test_synapse_initialization PASSED [ 58%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen PASSED    [ 59%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen_with_amount PASSED [ 59%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen_max_weight PASSED [ 60%]
+tests/test_neural_web.py::TestSynapse::test_synapse_decay PASSED         [ 60%]
+tests/test_neural_web.py::TestSynapse::test_synapse_decay_min_weight PASSED [ 61%]
+tests/test_neural_web.py::TestSynapse::test_synapse_to_dict PASSED       [ 61%]
+tests/test_neural_web.py::TestSynapse::test_synapse_from_dict PASSED     [ 62%]
+tests/test_neural_web.py::TestNeuralWebInitialization::test_neural_web_init_creates_directory PASSED [ 63%]
+tests/test_neural_web.py::TestNeuralWebInitialization::test_neural_web_creates_directory_if_not_exists PASSED [ 63%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_from_simple_text PASSED [ 64%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_filters_short_words PASSED [ 64%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_extracts_phrases PASSED [ 65%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_from_empty_text PASSED [ 65%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_creates_new PASSED [ 66%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_returns_existing PASSED [ 67%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_case_insensitive PASSED [ 67%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_activate_neurons PASSED [ 68%]
+tests/test_neural_web.py::TestNeuralWebConnectionStrengthening::test_strengthen_connections_creates_synapses PASSED [ 68%]
+tests/test_neural_web.py::TestNeuralWebConnectionStrengthening::test_strengthen_connections_bidirectional PASSED [ 69%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_from_text PASSED [ 69%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_from_empty_text PASSED [ 70%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_strengthens_existing_connections PASSED [ 71%]
+tests/test_neural_web.py::TestNeuralWebDecay::test_apply_decay PASSED    [ 71%]
+tests/test_neural_web.py::TestNeuralWebDecay::test_apply_decay_removes_weak_synapses PASSED [ 72%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_related_concepts PASSED [ 72%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_related_concepts_for_unknown_concept PASSED [ 73%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_strongest_patterns PASSED [ 73%]
+tests/test_neural_web.py::TestNeuralWebPersistence::test_save_and_load PASSED [ 74%]
+tests/test_neural_web.py::TestNeuralWebPersistence::test_save_creates_file PASSED [ 75%]
+tests/test_neural_web.py::TestNeuralWebStats::test_get_stats_empty_web PASSED [ 75%]
+tests/test_neural_web.py::TestNeuralWebStats::test_get_stats_with_data PASSED [ 76%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_returns_instance PASSED [ 76%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_returns_same_instance PASSED [ 77%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_loads_data PASSED [ 77%]
+tests/test_validation.py::TestCreateProjectRequest::test_valid_project_creation PASSED [ 78%]
+tests/test_validation.py::TestCreateProjectRequest::test_valid_project_with_underscore PASSED [ 78%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_with_spaces PASSED [ 79%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_with_uppercase PASSED [ 80%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_starts_with_underscore PASSED [ 80%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_starts_with_dash PASSED [ 81%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_empty_name PASSED [ 81%]
+tests/test_validation.py::TestCreateProjectRequest::test_key_too_long PASSED [ 82%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_completion PASSED [ 82%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_status PASSED [ 83%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_priority PASSED [ 84%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_empty_updates PASSED [ 84%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_completion_range PASSED [ 85%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_status_value PASSED [ 85%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_priority_value PASSED [ 86%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_update_field PASSED [ 86%]
+tests/test_validation.py::TestLogSessionRequest::test_valid_session_log PASSED [ 87%]
+tests/test_validation.py::TestLogSessionRequest::test_valid_session_without_achievements PASSED [ 88%]
+tests/test_validation.py::TestLogSessionRequest::test_invalid_empty_summary PASSED [ 88%]
+tests/test_validation.py::TestLogSessionRequest::test_invalid_too_many_achievements PASSED [ 89%]
+tests/test_validation.py::TestLogSessionRequest::test_achievements_strips_whitespace PASSED [ 89%]
+tests/test_validation.py::TestSemanticSearchRequest::test_valid_semantic_search PASSED [ 90%]
+tests/test_validation.py::TestSemanticSearchRequest::test_valid_semantic_search_default_limit PASSED [ 90%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_empty_query PASSED [ 91%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_limit_too_large PASSED [ 92%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_limit_too_small PASSED [ 92%]
+tests/test_validation.py::TestListProjectsRequest::test_valid_filter_active PASSED [ 93%]
+tests/test_validation.py::TestListProjectsRequest::test_valid_no_filter PASSED [ 93%]
+tests/test_validation.py::TestListProjectsRequest::test_invalid_filter_value PASSED [ 94%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_valid_snapshot_name PASSED [ 94%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_invalid_snapshot_with_colon PASSED [ 95%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_invalid_snapshot_with_slash PASSED [ 96%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_valid_session_history_count PASSED [ 96%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_valid_session_history_default PASSED [ 97%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_invalid_count_too_large PASSED [ 97%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_invalid_count_zero PASSED [ 98%]
+tests/test_validation.py::TestLoadContextRequest::test_valid_load_context PASSED [ 98%]
+tests/test_validation.py::TestLoadContextRequest::test_valid_load_context_default_tokens PASSED [ 99%]
+tests/test_validation.py::TestLoadContextRequest::test_invalid_max_tokens_too_large PASSED [100%]C:\REL\.venv\Lib\site-packages\coverage\report_core.py:107: CoverageWarning: Couldn't parse Python file 'C:\REL\mcp_server_typed.py' (couldnt-parse); see https://coverage.readthedocs.io/en/7.13.4/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+C:\REL\.venv\Lib\site-packages\coverage\report_core.py:107: CoverageWarning: Couldn't parse Python file 'C:\REL\mcp_server_typed_INCOMPLETE.py' (couldnt-parse); see https://coverage.readthedocs.io/en/7.13.4/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+
+
+================================== FAILURES ===================================
+___________________ TestFileLocking.test_file_lock_timeout ____________________
+
+self = <test_mcp_server.TestFileLocking object at 0x00000211BF136C40>
+tmp_path = WindowsPath('C:/Users/Bulkl/AppData/Local/Temp/pytest-of-Bulkl/pytest-8/test_file_lock_timeout0')
+
+    def test_file_lock_timeout(self, tmp_path):
+        """File lock times out if cannot acquire"""
+        lock_path = tmp_path / "test.lock"
+    
+        # Hold lock in background
+        async def hold_lock():
+            with file_lock(lock_path, timeout=10.0):
+                await asyncio.sleep(2.0)
+    
+        # Try to acquire with short timeout - should fail
+        with pytest.raises(TimeoutError):
+>           asyncio.create_task(hold_lock())
+
+tests\integration\test_mcp_server.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+coro = <coroutine object TestFileLocking.test_file_lock_timeout.<locals>.hold_lock at 0x00000211FB41FC40>
+kwargs = {}
+
+    def create_task(coro, **kwargs):
+        """Schedule the execution of a coroutine object in a spawn task.
+    
+        Return a Task object.
+        """
+>       loop = events.get_running_loop()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: no running event loop
+
+C:\Users\Bulkl\AppData\Local\Python\pythoncore-3.14-64\Lib\asyncio\tasks.py:394: RuntimeError
+________ TestVersioning.test_atomic_update_gives_up_after_max_retries _________
+
+self = <test_mcp_server.TestVersioning object at 0x00000211BF177AC0>
+tmp_path = WindowsPath('C:/Users/Bulkl/AppData/Local/Temp/pytest-of-Bulkl/pytest-8/test_atomic_update_gives_up_af0')
+
+    def test_atomic_update_gives_up_after_max_retries(self, tmp_path):
+        """Atomic update raises after max retries exhausted"""
+        filepath = tmp_path / "data.json"
+        lock_path = tmp_path / "data.lock"
+    
+        # Simulate constant version conflicts
+        call_count = 0
+    
+        def always_conflict(expected_version):
+            nonlocal call_count
+            call_count += 1
+            raise VersionConflictError("Simulated conflict")
+    
+        with patch('mcp_server.save_versioned_json', side_effect=always_conflict):
+            with pytest.raises(VersionConflictError):
+>               atomic_update(filepath, lock_path, lambda x: x, max_retries=3)
+
+tests\integration\test_mcp_server.py:251: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+mcp_server.py:277: in atomic_update
+    save_versioned_json(filepath, updated_data, expected_version=version)
+C:\Users\Bulkl\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py:1175: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+C:\Users\Bulkl\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py:1179: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <MagicMock name='save_versioned_json' id='2276252986944'>
+args = (WindowsPath('C:/Users/Bulkl/AppData/Local/Temp/pytest-of-Bulkl/pytest-8/test_atomic_update_gives_up_af0/data.json'), {})
+kwargs = {'expected_version': 0}
+effect = <function TestVersioning.test_atomic_update_gives_up_after_max_retries.<locals>.always_conflict at 0x00000211FB4C2CF0>
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+                raise effect
+            elif not _callable(effect):
+                result = next(effect)
+                if _is_exception(result):
+                    raise result
+            else:
+>               result = effect(*args, **kwargs)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: TestVersioning.test_atomic_update_gives_up_after_max_retries.<locals>.always_conflict() got multiple values for argument 'expected_version'
+
+C:\Users\Bulkl\AppData\Local\Python\pythoncore-3.14-64\Lib\unittest\mock.py:1240: TypeError
+__________ TestUtilityFunctions.test_calculate_days_since_valid_date __________
+
+self = <test_mcp_server.TestUtilityFunctions object at 0x00000211BF137820>
+
+    def test_calculate_days_since_valid_date(self):
+        """Calculate days since valid date"""
+        # Use a date we know
+        date_str = "2026-02-01"  # 18 days before Feb 19
+    
+        days = calculate_days_since(date_str)
+    
+>       assert days == 18
+E       assert 19 == 18
+
+tests\integration\test_mcp_server.py:298: AssertionError
+_________ TestContextPressure.test_get_staleness_multiplier_complete __________
+
+self = <test_mcp_server.TestContextPressure object at 0x00000211BF13E210>
+
+    def test_get_staleness_multiplier_complete(self):
+        """Complete projects get 0.0 multiplier"""
+        project = {"status": "complete", "completion": 100, "last_worked": "2026-01-01"}
+    
+>       assert get_staleness_multiplier(project) == 0.0
+E       AssertionError: assert 2.0 == 0.0
+E        +  where 2.0 = get_staleness_multiplier({'status': 'complete', 'completion': 100, 'last_worked': '2026-01-01'})
+
+tests\integration\test_mcp_server.py:358: AssertionError
+_________________ TestContextPressure.test_calculate_urgency __________________
+
+self = <test_mcp_server.TestContextPressure object at 0x00000211BF620050>
+
+    def test_calculate_urgency(self):
+        """Urgency calculation combines factors correctly"""
+        project = {
+            "last_worked": "2026-02-09",  # 10 days ago
+            "priority": "high",  # 2.0 weight
+            "completion": 50,
+            "status": "active"  # No special multiplier = 1.0
+        }
+    
+        urgency = calculate_urgency(project)
+    
+        # 10 days * 2.0 priority * 1.0 staleness = 20.0
+>       assert urgency == 20.0
+E       assert 33.0 == 20.0
+
+tests\integration\test_mcp_server.py:372: AssertionError
+_ TestContradictionDetection.test_check_statement_conflict_detects_contradiction _
+
+self = <test_mcp_server.TestContradictionDetection object at 0x00000211BF137100>
+
+    def test_check_statement_conflict_detects_contradiction(self):
+        """Detect conflict when statement contradicts commitment"""
+        sessions = [
+            {"summary": "Committed to using React for frontend", "achievements": []}
+        ]
+    
+        result = check_statement_conflict("We won't use React anymore", sessions)
+    
+>       assert result["conflicts_found"] is True
+E       assert False is True
+
+tests\integration\test_mcp_server.py:471: AssertionError
+____________ TestNarrativeArc.test_calculate_momentum_accelerating ____________
+
+self = <test_mcp_server.TestNarrativeArc object at 0x00000211BF618410>
+
+    def test_calculate_momentum_accelerating(self):
+        """High session frequency indicates acceleration"""
+        # 2 sessions per day over 7 days
+        sessions = [{"date": f"2026-02-{i:02d}"} for i in range(12, 19)] * 2
+    
+        momentum = calculate_momentum(sessions, days=7)
+    
+>       assert momentum == "accelerating"
+E       AssertionError: assert 'steady' == 'accelerating'
+E         
+E         - accelerating
+E         + steady
+
+tests\integration\test_mcp_server.py:493: AssertionError
+___________ TestAffectiveTrends.test_get_affective_trends_analysis ____________
+
+self = <test_mcp_server.TestAffectiveTrends object at 0x00000211BF620490>
+
+    def test_get_affective_trends_analysis(self):
+        """Complete affective trends analysis"""
+        state = {}
+        log = {
+            "sessions": [
+                {"achievements": ["a", "b", "c", "d"]},
+                {"achievements": ["e", "f", "g"]},
+                {"achievements": ["h", "i"]},
+                {"achievements": ["j"]}
+            ]
+        }
+    
+        result = get_affective_trends_analysis(state, log)
+    
+        assert "current_state" in result
+        assert "energy_level" in result
+        assert "productivity_trend" in result
+>       assert result["productivity_trend"] == "decreasing"  # Achievements declining
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: assert 'stable' == 'decreasing'
+E         
+E         - decreasing
+E         + stable
+
+tests\integration\test_mcp_server.py:621: AssertionError
+_____ TestCognitiveToolIntegration.test_check_for_conflict_with_sessions ______
+
+self = <test_tool_handlers.TestCognitiveToolIntegration object at 0x00000211BF600E90>
+sample_log = {'sessions': [{'achievements': ['Set up OAuth2', 'Created login page'], 'date': '2026-02-18', 'project': 'test_project...: 1, ...}, {'achievements': ['Added JWT tokens'], 'date': '2026-02-19', 'project': 'test_project', 'session': 2, ...}]}
+
+    def test_check_for_conflict_with_sessions(self, sample_log):
+        """Check for conflict detects contradictions"""
+        from mcp_server import check_statement_conflict
+    
+        # This should conflict with session 1 (OAuth2)
+        result = check_statement_conflict(
+            "We won't use OAuth2 anymore",
+            sample_log["sessions"]
+        )
+    
+>       assert result["conflicts_found"] is True
+E       assert False is True
+
+tests\integration\test_tool_handlers.py:429: AssertionError
+============================== warnings summary ===============================
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.3-final-0 _______________
+
+Name                               Stmts   Miss Branch BrPart   Cover   Missing
+-------------------------------------------------------------------------------
+brain.py                             172    150     60      0   9.48%   24-32, 37-45, 50-58, 65-76, 80-117, 121-133, 137-169, 173-210, 214, 224-283, 292-294
+brain_typed.py                       182     52     60     13  70.66%   18-19, 23-24, 29-31, 45-47, 62-64, 79-81, 140-141, 148-149, 153-154, 171-173, 187->exit, 192-193, 211, 215, 238-240, 258, 264-296, 339->332, 346->343, 357->361, 368->361, 380->372, 389-391
+build_complete_typed.py               40     40     18      0   0.00%   5-79
+count_tests.py                         7      7      0      0   0.00%   1-15
+finalize_typed.py                     30     30     14      0   0.00%   3-51
+manual_test.py                        37     37      0      0   0.00%   1-50
+mcp_server.py                        887    608    390     34  28.90%   30, 48-49, 59-61, 68-70, 84, 87, 91-92, 95-96, 101-103, 108-110, 151->171, 160-169, 172, 178->189, 184-186, 189->exit, 192-193, 282-288, 293-294, 298-299, 329-335, 339-351, 355, 359-371, 375, 419, 461, 465, 517-531, 545, 548->exit, 550->exit, 566, 568, 572, 576, 590, 595, 596->599, 601, 602->605, 605->608, 626, 632->exit, 638, 648, 650, 652, 671, 673, 693, 766-1614, 1622-1643, 1646
+mcp_server_typed_phase1.py           210    210     40      0   0.00%   11-555
+mcp_server_typed_phase2.py           197    197    108      0   0.00%   14-565
+mcp_server_typed_phase3.py           150    150     30      0   0.00%   10-1282
+mcp_server_typed_phase3_part2.py     172    172     60      0   0.00%   9-711
+mcp_server_typed_phase3_part3.py     177    177     56      0   0.00%   9-647
+neural_web.py                        183    146     42      0  16.44%   25-30, 34-35, 39, 51-55, 62-67, 71-73, 77, 81, 93-98, 105-111, 115-139, 143-162, 167-184, 188-200, 204-211, 216-220, 224-231, 236-247, 251-278, 282-305, 310-330, 334-340, 356-359
+neural_web_typed.py                  183      6     42      4  95.56%   235-236, 266-267, 469->465, 477-479, 485->exit, 516->513, 552->548
+quick_mypy.py                         14     14      0      0   0.00%   3-26
+run_all_tests_with_coverage.py        18     18      4      0   0.00%   2-39
+run_full_tests.py                     26     26     10      0   0.00%   1-51
+run_integration.py                    27     27      4      0   0.00%   4-53
+run_integration_now.py                24     24      4      0   0.00%   2-48
+run_integration_tests.py              10     10      0      0   0.00%   1-18
+run_mypy_phase1.py                    17     17      4      0   0.00%   1-34
+run_pytest.py                         11     11      0      0   0.00%   1-21
+test_check.py                         46     46      0      0   0.00%   1-60
+test_direct_imports.py                30     30      0      0   0.00%   2-55
+test_imports.py                       25     25      0      0   0.00%   2-30
+test_imports_quick.py                 15     15      0      0   0.00%   2-29
+test_write.py                        100    100      0      0   0.00%   2-200
+validate_integration_tests.py         60     60     12      0   0.00%   4-107
+validation_models.py                 255     62     70      5  70.15%   30-32, 129, 205, 213, 235-240, 252-255, 277-280, 292-295, 307-310, 323-326, 345-348, 374, 387-390, 402-405, 417-420, 439, 460-463, 496-499, 512-515
+verify_tests_ready.py                 79     79      2      0   0.00%   5-133
+-------------------------------------------------------------------------------
+TOTAL                               3384   2546   1030     56  23.61%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+=========================== short test summary info ===========================
+FAILED tests/integration/test_mcp_server.py::TestFileLocking::test_file_lock_timeout - RuntimeError: no running event loop
+FAILED tests/integration/test_mcp_server.py::TestVersioning::test_atomic_update_gives_up_after_max_retries - TypeError: TestVersioning.test_atomic_update_gives_up_after_max_retries.<locals>.always_conflict() got multiple values for argument 'expected_version'
+FAILED tests/integration/test_mcp_server.py::TestUtilityFunctions::test_calculate_days_since_valid_date - assert 19 == 18
+FAILED tests/integration/test_mcp_server.py::TestContextPressure::test_get_staleness_multiplier_complete - AssertionError: assert 2.0 == 0.0
+ +  where 2.0 = get_staleness_multiplier({'status': 'complete', 'completion': 100, 'last_worked': '2026-01-01'})
+FAILED tests/integration/test_mcp_server.py::TestContextPressure::test_calculate_urgency - assert 33.0 == 20.0
+FAILED tests/integration/test_mcp_server.py::TestContradictionDetection::test_check_statement_conflict_detects_contradiction - assert False is True
+FAILED tests/integration/test_mcp_server.py::TestNarrativeArc::test_calculate_momentum_accelerating - AssertionError: assert 'steady' == 'accelerating'
+  
+  - accelerating
+  + steady
+FAILED tests/integration/test_mcp_server.py::TestAffectiveTrends::test_get_affective_trends_analysis - AssertionError: assert 'stable' == 'decreasing'
+  
+  - decreasing
+  + stable
+FAILED tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_check_for_conflict_with_sessions - assert False is True
+============ 9 failed, 165 passed, 2 skipped, 3 warnings in 22.88s ============

@@ -1,0 +1,145 @@
+=== FULL TEST SUITE RESULTS ===
+
+Return code: 0
+
+=== OUTPUT ===
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\REL\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\REL
+configfile: pyproject.toml
+plugins: anyio-4.12.1, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 96 items
+
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_creates_paths PASSED [  1%]
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_sets_defaults PASSED [  2%]
+tests/test_brain.py::TestRELBrainInitialization::test_brain_init_creates_directory PASSED [  3%]
+tests/test_brain.py::TestRELBrainStats::test_get_stats_empty_brain PASSED [  4%]
+tests/test_brain.py::TestRELBrainStats::test_get_stats_with_documents PASSED [  5%]
+tests/test_brain.py::TestRELBrainIngestion::test_ingest_text_without_initialization PASSED [  6%]
+tests/test_brain.py::TestRELBrainIngestion::test_ingest_from_state_and_log_structure PASSED [  7%]
+tests/test_brain.py::TestRELBrainSearch::test_search_empty_brain_returns_empty_list PASSED [  8%]
+tests/test_brain.py::TestRELBrainSearch::test_search_respects_limit_parameter PASSED [  9%]
+tests/test_brain.py::TestRELBrainSaveLoad::test_save_index_creates_files PASSED [ 10%]
+tests/test_brain.py::TestRELBrainSaveLoad::test_save_load_documents_roundtrip PASSED [ 11%]
+tests/test_brain.py::TestGetBrainSingleton::test_get_brain_returns_brain_instance PASSED [ 12%]
+tests/test_brain.py::TestGetBrainSingleton::test_get_brain_returns_same_instance PASSED [ 13%]
+tests/test_brain.py::TestRELBrainIntegration::test_full_initialization_with_dependencies SKIPPEDies) [ 14%]
+tests/test_brain.py::TestRELBrainIntegration::test_ingest_and_search_workflow SKIPPEDes) [ 15%]
+tests/test_neural_web.py::TestNeuron::test_neuron_initialization PASSED  [ 16%]
+tests/test_neural_web.py::TestNeuron::test_neuron_initialization_with_created_date PASSED [ 17%]
+tests/test_neural_web.py::TestNeuron::test_neuron_activate PASSED        [ 18%]
+tests/test_neural_web.py::TestNeuron::test_neuron_multiple_activations PASSED [ 19%]
+tests/test_neural_web.py::TestNeuron::test_neuron_to_dict PASSED         [ 20%]
+tests/test_neural_web.py::TestNeuron::test_neuron_from_dict PASSED       [ 21%]
+tests/test_neural_web.py::TestNeuron::test_neuron_roundtrip PASSED       [ 22%]
+tests/test_neural_web.py::TestSynapse::test_synapse_initialization PASSED [ 23%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen PASSED    [ 25%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen_with_amount PASSED [ 26%]
+tests/test_neural_web.py::TestSynapse::test_synapse_strengthen_max_weight PASSED [ 27%]
+tests/test_neural_web.py::TestSynapse::test_synapse_decay PASSED         [ 28%]
+tests/test_neural_web.py::TestSynapse::test_synapse_decay_min_weight PASSED [ 29%]
+tests/test_neural_web.py::TestSynapse::test_synapse_to_dict PASSED       [ 30%]
+tests/test_neural_web.py::TestSynapse::test_synapse_from_dict PASSED     [ 31%]
+tests/test_neural_web.py::TestNeuralWebInitialization::test_neural_web_init_creates_directory PASSED [ 32%]
+tests/test_neural_web.py::TestNeuralWebInitialization::test_neural_web_creates_directory_if_not_exists PASSED [ 33%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_from_simple_text PASSED [ 34%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_filters_short_words PASSED [ 35%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_extracts_phrases PASSED [ 36%]
+tests/test_neural_web.py::TestNeuralWebConceptExtraction::test_extract_concepts_from_empty_text PASSED [ 37%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_creates_new PASSED [ 38%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_returns_existing PASSED [ 39%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_get_or_create_neuron_case_insensitive PASSED [ 40%]
+tests/test_neural_web.py::TestNeuralWebNeuronManagement::test_activate_neurons PASSED [ 41%]
+tests/test_neural_web.py::TestNeuralWebConnectionStrengthening::test_strengthen_connections_creates_synapses PASSED [ 42%]
+tests/test_neural_web.py::TestNeuralWebConnectionStrengthening::test_strengthen_connections_bidirectional PASSED [ 43%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_from_text PASSED [ 44%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_from_empty_text PASSED [ 45%]
+tests/test_neural_web.py::TestNeuralWebLearning::test_learn_strengthens_existing_connections PASSED [ 46%]
+tests/test_neural_web.py::TestNeuralWebDecay::test_apply_decay PASSED    [ 47%]
+tests/test_neural_web.py::TestNeuralWebDecay::test_apply_decay_removes_weak_synapses PASSED [ 48%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_related_concepts PASSED [ 50%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_related_concepts_for_unknown_concept PASSED [ 51%]
+tests/test_neural_web.py::TestNeuralWebQueries::test_get_strongest_patterns PASSED [ 52%]
+tests/test_neural_web.py::TestNeuralWebPersistence::test_save_and_load PASSED [ 53%]
+tests/test_neural_web.py::TestNeuralWebPersistence::test_save_creates_file PASSED [ 54%]
+tests/test_neural_web.py::TestNeuralWebStats::test_get_stats_empty_web PASSED [ 55%]
+tests/test_neural_web.py::TestNeuralWebStats::test_get_stats_with_data PASSED [ 56%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_returns_instance PASSED [ 57%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_returns_same_instance PASSED [ 58%]
+tests/test_neural_web.py::TestGetNeuralWebSingleton::test_get_neural_web_loads_data PASSED [ 59%]
+tests/test_validation.py::TestCreateProjectRequest::test_valid_project_creation PASSED [ 60%]
+tests/test_validation.py::TestCreateProjectRequest::test_valid_project_with_underscore PASSED [ 61%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_with_spaces PASSED [ 62%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_with_uppercase PASSED [ 63%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_starts_with_underscore PASSED [ 64%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_key_starts_with_dash PASSED [ 65%]
+tests/test_validation.py::TestCreateProjectRequest::test_invalid_empty_name PASSED [ 66%]
+tests/test_validation.py::TestCreateProjectRequest::test_key_too_long PASSED [ 67%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_completion PASSED [ 68%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_status PASSED [ 69%]
+tests/test_validation.py::TestUpdateProjectRequest::test_valid_update_priority PASSED [ 70%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_empty_updates PASSED [ 71%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_completion_range PASSED [ 72%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_status_value PASSED [ 73%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_priority_value PASSED [ 75%]
+tests/test_validation.py::TestUpdateProjectRequest::test_invalid_update_field PASSED [ 76%]
+tests/test_validation.py::TestLogSessionRequest::test_valid_session_log PASSED [ 77%]
+tests/test_validation.py::TestLogSessionRequest::test_valid_session_without_achievements PASSED [ 78%]
+tests/test_validation.py::TestLogSessionRequest::test_invalid_empty_summary PASSED [ 79%]
+tests/test_validation.py::TestLogSessionRequest::test_invalid_too_many_achievements PASSED [ 80%]
+tests/test_validation.py::TestLogSessionRequest::test_achievements_strips_whitespace PASSED [ 81%]
+tests/test_validation.py::TestSemanticSearchRequest::test_valid_semantic_search PASSED [ 82%]
+tests/test_validation.py::TestSemanticSearchRequest::test_valid_semantic_search_default_limit PASSED [ 83%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_empty_query PASSED [ 84%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_limit_too_large PASSED [ 85%]
+tests/test_validation.py::TestSemanticSearchRequest::test_invalid_limit_too_small PASSED [ 86%]
+tests/test_validation.py::TestListProjectsRequest::test_valid_filter_active PASSED [ 87%]
+tests/test_validation.py::TestListProjectsRequest::test_valid_no_filter PASSED [ 88%]
+tests/test_validation.py::TestListProjectsRequest::test_invalid_filter_value PASSED [ 89%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_valid_snapshot_name PASSED [ 90%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_invalid_snapshot_with_colon PASSED [ 91%]
+tests/test_validation.py::TestCreateSnapshotRequest::test_invalid_snapshot_with_slash PASSED [ 92%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_valid_session_history_count PASSED [ 93%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_valid_session_history_default PASSED [ 94%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_invalid_count_too_large PASSED [ 95%]
+tests/test_validation.py::TestGetSessionHistoryRequest::test_invalid_count_zero PASSED [ 96%]
+tests/test_validation.py::TestLoadContextRequest::test_valid_load_context PASSED [ 97%]
+tests/test_validation.py::TestLoadContextRequest::test_valid_load_context_default_tokens PASSED [ 98%]
+tests/test_validation.py::TestLoadContextRequest::test_invalid_max_tokens_too_large PASSED [100%]
+
+============================== warnings summary ===============================
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyPacked has no __module__ attribute
+
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type SwigPyObject has no __module__ attribute
+
+<frozen importlib._bootstrap>:491
+  <frozen importlib._bootstrap>:491: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.3-final-0 _______________
+
+Name                   Stmts   Miss Branch BrPart   Cover   Missing
+-------------------------------------------------------------------
+brain.py                 172    172     60      0   0.00%   8-294
+brain_typed.py           182     52     60     13  70.66%   18-19, 23-24, 29-31, 45-47, 62-64, 79-81, 140-141, 148-149, 153-154, 171-173, 187->exit, 192-193, 211, 215, 238-240, 258, 264-296, 339->332, 346->343, 357->361, 368->361, 380->372, 389-391
+count_tests.py             7      7      0      0   0.00%   1-15
+manual_test.py            37     37      0      0   0.00%   1-50
+mcp_server.py            887    887    390      0   0.00%   10-1646
+neural_web.py            183    183     42      0   0.00%   10-359
+neural_web_typed.py      183      6     42      4  95.56%   235-236, 266-267, 469->465, 477-479, 485->exit, 516->513, 552->548
+run_full_tests.py         26     26     10      0   0.00%   1-51
+run_pytest.py             11     11      0      0   0.00%   1-21
+test_check.py             46     46      0      0   0.00%   1-60
+test_imports.py           25     25      0      0   0.00%   2-30
+test_write.py            100    100      0      0   0.00%   2-200
+validation_models.py     255     62     70      5  70.15%   30-32, 129, 205, 213, 235-240, 252-255, 277-280, 292-295, 307-310, 323-326, 345-348, 374, 387-390, 402-405, 417-420, 439, 460-463, 496-499, 512-515
+-------------------------------------------------------------------
+TOTAL                   2114   1614    674     22  22.02%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+================= 94 passed, 2 skipped, 3 warnings in 18.58s ==================

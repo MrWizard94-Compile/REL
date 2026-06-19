@@ -1,0 +1,10 @@
+{
+  "name": "slack_notifications",
+  "version": "1.0.0",
+  "description": "Example Slack notification plugin template.",
+  "api_version": "1.0",
+  "entrypoint": "main.py",
+  "dependencies": [],
+  "enabled": true,
+  "sandbox_timeout_seconds": 15
+}

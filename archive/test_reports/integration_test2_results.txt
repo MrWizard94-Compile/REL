@@ -1,0 +1,97 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\REL\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\REL
+configfile: pyproject.toml
+plugins: anyio-4.12.1, asyncio-1.3.0, cov-7.0.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 36 items
+
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_load_state_structure PASSED [  2%]
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_get_state_summary_filters_fields PASSED [  5%]
+tests/integration/test_tool_handlers.py::TestCoreStateTools::test_get_stats_counts_correctly PASSED [  8%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_create_project_structure PASSED [ 11%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_project_returns_correct_project PASSED [ 13%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_list_projects_filter_by_status PASSED [ 16%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_update_project_modifies_fields PASSED [ 19%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_set_active_project PASSED [ 22%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_active_project_returns_current PASSED [ 25%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_archive_project_changes_status PASSED [ 27%]
+tests/integration/test_tool_handlers.py::TestProjectTools::test_get_project_stats PASSED [ 30%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_log_session_creates_session PASSED [ 33%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_get_session_history_returns_recent PASSED [ 36%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_get_current_session_returns_latest PASSED [ 38%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_end_session_changes_status PASSED [ 41%]
+tests/integration/test_tool_handlers.py::TestSessionTools::test_search_sessions_finds_matches PASSED [ 44%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_log_win_structure PASSED [ 47%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_capture_idea_adds_to_list PASSED [ 50%]
+tests/integration/test_tool_handlers.py::TestProgressTools::test_update_focus_changes_context PASSED [ 52%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_insights_with_urgent_project PASSED [ 55%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_predict_cold_projects_identifies_stale PASSED [ 58%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_check_for_conflict_with_sessions FAILED [ 61%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_story_arc_with_active_sessions PASSED [ 63%]
+tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_get_affective_trends_with_achievements PASSED [ 66%]
+tests/integration/test_tool_handlers.py::TestContextTools::test_search_files_pattern_matching PASSED [ 69%]
+tests/integration/test_tool_handlers.py::TestContextTools::test_get_loading_preview_counts_matches PASSED [ 72%]
+tests/integration/test_tool_handlers.py::TestAdvancedTools::test_get_analytics_structure PASSED [ 75%]
+tests/integration/test_tool_handlers.py::TestAdvancedTools::test_create_snapshot_naming PASSED [ 77%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_project_nonexistent PASSED [ 80%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_update_project_nonexistent PASSED [ 83%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_archive_project_nonexistent PASSED [ 86%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_project_stats_nonexistent PASSED [ 88%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_get_current_session_empty_log PASSED [ 91%]
+tests/integration/test_tool_handlers.py::TestErrorHandling::test_calculate_days_since_invalid_date PASSED [ 94%]
+tests/integration/test_tool_handlers.py::TestConcurrentAccess::test_multiple_updates_use_locking PASSED [ 97%]
+tests/integration/test_tool_handlers.py::TestConcurrentAccess::test_version_conflict_retry PASSED [100%]C:\REL\.venv\Lib\site-packages\coverage\report_core.py:107: CoverageWarning: Couldn't parse Python file 'C:\REL\mcp_server_typed.py' (couldnt-parse); see https://coverage.readthedocs.io/en/7.13.4/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+C:\REL\.venv\Lib\site-packages\coverage\report_core.py:107: CoverageWarning: Couldn't parse Python file 'C:\REL\mcp_server_typed_INCOMPLETE.py' (couldnt-parse); see https://coverage.readthedocs.io/en/7.13.4/messages.html#warning-couldnt-parse
+  coverage._warn(msg, slug="couldnt-parse")
+
+
+================================== FAILURES ===================================
+_____ TestCognitiveToolIntegration.test_check_for_conflict_with_sessions ______
+tests\integration\test_tool_handlers.py:429: in test_check_for_conflict_with_sessions
+    assert result["conflicts_found"] is True
+E   assert False is True
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.3-final-0 _______________
+
+Name                               Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------------
+brain.py                             172    150     60      0  9.48%   24-32, 37-45, 50-58, 65-76, 80-117, 121-133, 137-169, 173-210, 214, 224-283, 292-294
+brain_typed.py                       182    182     60      0  0.00%   8-410
+build_complete_typed.py               40     40     18      0  0.00%   5-79
+count_tests.py                         7      7      0      0  0.00%   1-15
+finalize_typed.py                     30     30     14      0  0.00%   3-51
+manual_test.py                        37     37      0      0  0.00%   1-50
+mcp_server.py                        887    643    390     50 23.96%   30, 48-49, 59-61, 68-70, 84, 87, 91-92, 95-96, 101-103, 108-110, 151->171, 160-169, 172, 178->189, 184-186, 189->exit, 192-193, 209-210, 229, 281-288, 293-294, 298-299, 329-335, 339-351, 355, 359-371, 375, 379-385, 390, 415, 417, 419, 432->exit, 433->exit, 435, 461, 464-467, 499, 513-531, 542, 545, 548->exit, 549->exit, 550->exit, 556, 562, 564, 566, 568, 572, 576, 590, 595, 596->599, 601, 602->605, 605->608, 623, 626, 631->exit, 632->exit, 638, 644, 646, 648, 650, 652, 663-675, 693, 766-1614, 1622-1643, 1646
+mcp_server_typed_phase1.py           210    210     40      0  0.00%   11-555
+mcp_server_typed_phase2.py           197    197    108      0  0.00%   14-565
+mcp_server_typed_phase3.py           150    150     30      0  0.00%   10-1282
+mcp_server_typed_phase3_part2.py     172    172     60      0  0.00%   9-711
+mcp_server_typed_phase3_part3.py     177    177     56      0  0.00%   9-647
+neural_web.py                        183    146     42      0 16.44%   25-30, 34-35, 39, 51-55, 62-67, 71-73, 77, 81, 93-98, 105-111, 115-139, 143-162, 167-184, 188-200, 204-211, 216-220, 224-231, 236-247, 251-278, 282-305, 310-330, 334-340, 356-359
+neural_web_typed.py                  183    183     42      0  0.00%   10-607
+quick_mypy.py                         14     14      0      0  0.00%   3-26
+run_all_tests_with_coverage.py        18     18      4      0  0.00%   2-39
+run_full_tests.py                     26     26     10      0  0.00%   1-51
+run_integration.py                    27     27      4      0  0.00%   4-53
+run_integration_now.py                24     24      4      0  0.00%   2-48
+run_integration_tests.py              10     10      0      0  0.00%   1-18
+run_mypy_phase1.py                    17     17      4      0  0.00%   1-34
+run_pytest.py                         11     11      0      0  0.00%   1-21
+test_check.py                         46     46      0      0  0.00%   1-60
+test_direct_imports.py                30     30      0      0  0.00%   2-55
+test_imports.py                       25     25      0      0  0.00%   2-30
+test_imports_quick.py                 15     15      0      0  0.00%   2-29
+test_write.py                        100    100      0      0  0.00%   2-200
+validate_integration_tests.py         60     60     12      0  0.00%   4-107
+validation_models.py                 255    255     70      0  0.00%   8-527
+verify_tests_ready.py                 79     79      2      0  0.00%   5-133
+------------------------------------------------------------------------------
+TOTAL                               3384   3081   1030     50  8.27%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+=========================== short test summary info ===========================
+FAILED tests/integration/test_tool_handlers.py::TestCognitiveToolIntegration::test_check_for_conflict_with_sessions - assert False is True
+======================== 1 failed, 35 passed in 4.07s =========================
