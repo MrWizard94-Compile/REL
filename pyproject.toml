@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rel-mcp-server"
 version = "1.0.0"
-description = "REL (Radiant Ether Loom) - Cognitive Architecture MCP Server with 45 Tools"
+description = "REL (Radiant Ether Loom) - Cognitive Architecture MCP Server with 88 Tools"
 authors = [
     {name = "Corwin", email = "corwin@rel.ai"}
 ]

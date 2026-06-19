@@ -26,6 +26,11 @@ Manual sync: `janus rel sync -q "your query"`
 
 Orchestrator tasks (assignee `claude`) may include `doc:rel-state`. JanusPrime injects a live REL state excerpt capped by `token_policy.rel_context_max_chars` (default 800). Never injected into Grok executor briefs.
 
+## Tool inventory
+
+- **88 tools** registered in MCP (`mcp_server.list_tools` / `rest_api.TOOL_NAMES` — discovered from `Tool(name=...)` definitions in `mcp_server.py`).
+- **5 bridge tools** callable by non-admin REST principals (see allowlist below). Admin may invoke any registered tool.
+
 ## Bridge Tools (REST)
 
 JanusPrime calls these via `POST /api/v1/tools/{tool_name}`:

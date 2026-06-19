@@ -77,7 +77,7 @@ Key endpoints:
 
 - `POST /api/v1/auth/token` (OAuth2 password flow)
 - `GET /api/v1/tools`
-- `POST /api/v1/tools/<tool_name>` (all 45 tools exposed)
+- `POST /api/v1/tools/<tool_name>` (all 88 tools exposed)
 - `GET /api/v1/analytics/advanced`
 - `GET /api/v1/dashboard/overview`
 - `GET /docs` (OpenAPI/Swagger)
