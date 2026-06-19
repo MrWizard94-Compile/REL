@@ -12,6 +12,20 @@ REL (Radiant Ether Loom) layers **above** [JanusPrime](https://github.com/MrWiza
 
 **Invariant:** REL `PowerShell` and filesystem bridge tools are **orchestrator-only**. Executors (Grok) must not use them — all code mutations flow through JanusPrime validation kernel (SOUL §1).
 
+## Evolution: Steward → Smart-Library Sync
+
+On complete `janus loop run` rollups (when `sync_concepts_to_memory: true`):
+
+1. JanusPrime calls REL `get_state_summary`, `load_context`, `get_analytics`
+2. Formats steward/neural-web highlights
+3. Seeds Smart-Library as category `Project Context`
+
+Manual sync: `janus rel sync -q "your query"`
+
+## `doc:rel-state` Context Ref
+
+Orchestrator tasks (assignee `claude`) may include `doc:rel-state`. JanusPrime injects a live REL state excerpt capped by `token_policy.rel_context_max_chars` (default 800). Never injected into Grok executor briefs.
+
 ## Bridge Tools (REST)
 
 JanusPrime calls these via `POST /api/v1/tools/{tool_name}`:
@@ -33,6 +47,25 @@ Set one of:
 REL REST defaults to `REL_API_AUTH_REQUIRED=true`. For local dev, create a service-role API key.
 
 ## Runtime
+
+### JanusPrime Docker Compose (recommended)
+
+When running the [JanusPrime stack](https://github.com/MrWizard94-Compile/JanusPrime), REL is the **`cognition`** service alongside `ollama` and `memory` (Smart-Library):
+
+```powershell
+# From JanusPrime workspace root (clone REL to REL_BUILD_CONTEXT or use default path)
+docker compose up -d
+```
+
+- Service name: `cognition` → container `janusprime-cognition`
+- REST API: `http://localhost:8080` (matches default `components.cognition.rest_url`)
+- Build context: `REL_BUILD_CONTEXT` env (default `C:/REL_Codex_Variant`)
+- Data volume: `REL_DATA_PATH` env (default `C:/REL_Codex_Variant/data`)
+- Steward Ollama: `OLLAMA_BASE_URL=http://ollama:11434` inside the stack
+
+Point `janus.config.json` at `http://localhost:8080`. For local dev, JanusPrime compose sets `REL_API_AUTH_REQUIRED=false` by default.
+
+### Standalone (two terminals)
 
 ```powershell
 # Terminal 1 — REL REST API

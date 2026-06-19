@@ -10,6 +10,10 @@ REL is the **cognition layer**; [JanusPrime](https://github.com/MrWizard94-Compi
 
 See [`integrations/janusprime.md`](integrations/janusprime.md) for the REST bridge contract and configuration.
 
+### JanusPrime Docker Compose
+
+In the JanusPrime workspace, `docker compose up` runs REL as the **`cognition`** service (`janusprime-cognition` on port **8080**), wired to the shared `ollama` service for steward concept extraction. Set `REL_BUILD_CONTEXT` / `REL_DATA_PATH` if your REL checkout is not at the default path. See JanusPrime `docker-compose.yml` and [`integrations/janusprime.md`](integrations/janusprime.md#janusprime-docker-compose-recommended).
+
 ## Key Improvements Included
 
 - Complete Pydantic request validation integrated into runtime tool dispatch.
