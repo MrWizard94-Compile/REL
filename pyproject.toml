@@ -38,7 +38,7 @@ dependencies = [
     "scikit-learn==1.3.0",
     "pandas==2.0.3",
     "python-dateutil==2.8.2",
-    "pydantic==2.5.3",
+    "pydantic>=2.7.0,<3",
 ]
 
 [project.optional-dependencies]
@@ -59,6 +59,8 @@ Documentation = "https://github.com/corwin/rel/docs"
 Repository = "https://github.com/corwin/rel"
 
 [tool.setuptools]
+# Flat layout: top-level modules at repo root (no rel/ package directory).
+packages = []
 py-modules = [
     "mcp_server",
     "brain",
@@ -69,10 +71,10 @@ py-modules = [
     "analytics_engine",
     "plugin_system",
     "rest_api",
+    "steward",
+    "windows_bridge",
+    "filesystem_bridge",
 ]
-
-[tool.setuptools.package-data]
-"" = ["py.typed"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
@@ -80,17 +82,12 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+# Coverage flags are intentionally omitted here so `pytest` works without the
+# dev extra. After `pip install -e ".[dev]"`, run with coverage via:
+#   pytest --cov=mcp_server --cov=brain_typed --cov=neural_web_typed \
+#     --cov=validation_models --cov=analytics_engine --cov=plugin_system \
+#     --cov=rest_api --cov-report=term-missing
 addopts = [
-    "--cov=mcp_server",
-    "--cov=brain_typed",
-    "--cov=neural_web_typed",
-    "--cov=validation_models",
-    "--cov=analytics_engine",
-    "--cov=plugin_system",
-    "--cov=rest_api",
-    "--cov-report=html",
-    "--cov-report=term-missing",
-    "--cov-report=xml",
     "--strict-markers",
     "-v",
 ]
