@@ -86,6 +86,91 @@ AUTH_REQUIRED = os.environ.get("REL_AUTH_REQUIRED", "").lower() in {"1", "true",
 )
 AUTH_ARGUMENT_KEYS = ("auth_token", "_auth_token", "access_token", "bearer_token")
 
+# JanusPrime bridge tools (same contract as REST DEFAULT_REST_BRIDGE_TOOLS)
+DEFAULT_MCP_BRIDGE_TOOLS: Tuple[str, ...] = (
+    "get_state_summary",
+    "load_context",
+    "log_session",
+    "neural_learn",
+    "get_analytics",
+)
+
+# Orchestrator-only tools denied to MCP executors when REL_MCP_EXECUTOR_SAFE=true (default).
+DEFAULT_MCP_DENIED_TOOLS: Tuple[str, ...] = (
+    "PowerShell",
+    "Process",
+    "Registry",
+    "Screenshot",
+    "Click",
+    "TypeText",
+    "Shortcut",
+    "DeskSnapshot",
+    "Scroll",
+    "Move",
+    "PauseSec",
+    "WebScrape",
+    "AppLaunch",
+    "Clipboard",
+    "Notification",
+    "MultiClick",
+    "MultiEdit",
+    "WinFileSystem",
+    "fs_read_file",
+    "fs_write_file",
+    "fs_edit_file",
+    "fs_list_directory",
+    "fs_search_files",
+    "fs_directory_tree",
+    "fs_move_file",
+    "fs_get_file_info",
+    "fs_read_multiple",
+    "fs_create_directory",
+    "fs_allowed_dirs",
+    "create_snapshot",
+)
+
+
+def _parse_env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name, "").strip().lower()
+    if not raw:
+        return default
+    return raw in {"1", "true", "yes"}
+
+
+def _load_mcp_executor_safe() -> bool:
+    """When true (default), MCP hides/blocks dangerous orchestrator-only tools."""
+    return _parse_env_bool("REL_MCP_EXECUTOR_SAFE", default=True)
+
+
+def _load_mcp_denied_tools() -> frozenset[str]:
+    raw = os.environ.get("REL_MCP_DENIED_TOOLS", "").strip()
+    if raw:
+        return frozenset(part.strip() for part in raw.split(",") if part.strip())
+    return frozenset(DEFAULT_MCP_DENIED_TOOLS)
+
+
+MCP_EXECUTOR_SAFE = _load_mcp_executor_safe()
+MCP_DENIED_TOOLS = _load_mcp_denied_tools()
+
+
+def _mcp_tool_is_denied(tool_name: str) -> bool:
+    return MCP_EXECUTOR_SAFE and tool_name in MCP_DENIED_TOOLS
+
+
+def _filter_mcp_tools_for_executor(tools: List[Tool]) -> List[Tool]:
+    if not MCP_EXECUTOR_SAFE:
+        return tools
+    return [tool for tool in tools if tool.name not in MCP_DENIED_TOOLS]
+
+
+def _mcp_tool_policy_error(tool_name: str) -> Optional[str]:
+    if not _mcp_tool_is_denied(tool_name):
+        return None
+    return (
+        f"Tool '{tool_name}' is not allowed via MCP in executor-safe mode. "
+        f"Set REL_MCP_EXECUTOR_SAFE=false for full orchestrator access."
+    )
+
 
 class MonitoringStore:
     """In-process counters for tool calls, errors, and latency."""
@@ -974,7 +1059,7 @@ def _validate_tool_arguments(name: str, arguments: Optional[Mapping[str, Any]]) 
 @app.list_tools()
 async def list_tools() -> List[Tool]:
     """List all 88 tools — ordered by priority (top 71 load within Claude.ai cap)"""
-    return [
+    tools = [
         # TIER 1: CRITICAL — fired every single session (P1+)
         Tool(name="get_state_summary", description="â˜… START HERE - Lightweight summary", inputSchema={"type": "object", "properties": {}}),
         Tool(name="log_session", description="Log session + AUTO-LEARN", inputSchema={"type": "object", "properties": {"summary": {"type": "string"}, "achievements": {"type": "array", "items": {"type": "string"}}}, "required": ["summary"]}),
@@ -1078,6 +1163,7 @@ async def list_tools() -> List[Tool]:
         Tool(name="get_blocking_tasks", description="Find tasks blocking this task", inputSchema={"type": "object", "properties": {"task_id": {"type": "string"}}, "required": ["task_id"]}),
 
     ]
+    return _filter_mcp_tools_for_executor(tools)
 
 # ==================================================================================================================================
 # TOOL HANDLERS - ALL 41 + COGNITIVE MODULES + BRAIN
@@ -1090,6 +1176,16 @@ async def call_tool(name: str, arguments: Dict[str, Any]) -> List[TextContent]:
     tool_status = "success"
 
     try:
+        policy_error = _mcp_tool_policy_error(name)
+        if policy_error:
+            tool_status = "forbidden"
+            return [
+                TextContent(
+                    type="text",
+                    text=json.dumps({"error": policy_error, "code": 403}, indent=2),
+                )
+            ]
+
         raw_arguments: Mapping[str, Any] = arguments if isinstance(arguments, dict) else {}
         auth_error = _validate_oauth2_token(raw_arguments)
         if auth_error:
@@ -2714,6 +2810,13 @@ async def main():
     logger.info("  Corwin's Memory That THINKS, ANALYZES, SEARCHES SEMANTICALLY, and LEARNS!")
     logger.info("=" * 80)
     logger.info(f"  Base Path: {REL_PATH}")
+    if MCP_EXECUTOR_SAFE:
+        logger.info(
+            "  MCP executor-safe mode ON — %d tools denied (REL_MCP_EXECUTOR_SAFE=false for full access)",
+            len(MCP_DENIED_TOOLS),
+        )
+    else:
+        logger.info("  MCP executor-safe mode OFF — all tools exposed")
     logger.info("  âœ… All 87 Tools Operational (41 core + 4 neural + 10 task + 4 decision + 18 windows + 10 filesystem)")
     logger.info("  ðŸ§  Context Pressure â†’ get_insights, predict_cold_projects")
     logger.info("  ðŸ§  Contradiction Detection â†’ check_for_conflict")

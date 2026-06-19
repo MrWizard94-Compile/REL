@@ -53,6 +53,28 @@ Non-admin principals (`service`, `member`, `manager`, and anonymous when auth is
 
   `get_state_summary,load_context,log_session,neural_learn,get_analytics`
 
+### MCP tool policy (H1)
+
+MCP stdio clients (e.g. Claude orchestrator, Grok executor) previously saw all **88** registered tools. Executor-safe mode mirrors the REST invariant: dangerous tools are hidden from `list_tools` and blocked in `call_tool`.
+
+| Env | Default | Effect |
+|-----|---------|--------|
+| `REL_MCP_EXECUTOR_SAFE` | `true` | Deny dangerous tools via MCP |
+| `REL_MCP_EXECUTOR_SAFE` | `false` | Admin/orchestrator bypass — all tools listed and callable |
+| `REL_MCP_DENIED_TOOLS` | *(see below)* | Comma-separated denylist override |
+
+When `REL_MCP_EXECUTOR_SAFE=true` (JanusPrime default):
+
+- **`list_tools`** omits denied tools (PowerShell, `fs_*`, Windows desktop bridge tools, `WinFileSystem`, `create_snapshot`, etc.).
+- **`call_tool`** returns **403** JSON for denied tools: `{"error": "...", "code": 403}`.
+- Bridge tools (`get_state_summary`, `load_context`, `log_session`, `neural_learn`, `get_analytics`) and safe cognition tools remain available.
+
+Default `REL_MCP_DENIED_TOOLS` (30 tools):
+
+`PowerShell,Process,Registry,Screenshot,Click,TypeText,Shortcut,DeskSnapshot,Scroll,Move,PauseSec,WebScrape,AppLaunch,Clipboard,Notification,MultiClick,MultiEdit,WinFileSystem,fs_read_file,fs_write_file,fs_edit_file,fs_list_directory,fs_search_files,fs_directory_tree,fs_move_file,fs_get_file_info,fs_read_multiple,fs_create_directory,fs_allowed_dirs,create_snapshot`
+
+**Orchestrator full access:** set `REL_MCP_EXECUTOR_SAFE=false` in the MCP server environment (e.g. Claude Desktop `mcpServers.REL.env`).
+
 ## Authentication
 
 Set one of:
