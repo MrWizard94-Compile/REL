@@ -51,6 +51,24 @@ RATE_LIMIT_PER_MINUTE = int(os.environ.get("REL_API_RATE_LIMIT_PER_MINUTE", "180
 LOGIN_RATE_LIMIT_PER_MINUTE = int(os.environ.get("REL_API_LOGIN_RATE_LIMIT_PER_MINUTE", "12"))
 RATE_LIMIT_WINDOW_SECONDS = int(os.environ.get("REL_API_RATE_LIMIT_WINDOW_SECONDS", "60"))
 
+DEFAULT_REST_BRIDGE_TOOLS: Tuple[str, ...] = (
+    "get_state_summary",
+    "load_context",
+    "log_session",
+    "neural_learn",
+    "get_analytics",
+)
+
+
+def _load_rest_bridge_tools() -> frozenset[str]:
+    raw = os.environ.get("REL_REST_BRIDGE_TOOLS", "").strip()
+    if raw:
+        return frozenset(part.strip() for part in raw.split(",") if part.strip())
+    return frozenset(DEFAULT_REST_BRIDGE_TOOLS)
+
+
+REST_BRIDGE_TOOLS = _load_rest_bridge_tools()
+
 _oauth2_secret_raw = os.environ.get("REL_OAUTH2_SECRET", "").strip()
 if _oauth2_secret_raw:
     OAUTH2_SECRET = _oauth2_secret_raw.encode("utf-8")
@@ -700,7 +718,7 @@ async def get_current_principal(
             detail="Authentication required.",
         )
 
-    return Principal(subject="anonymous", role="anonymous", auth_type="none")
+    return Principal(subject="anonymous", role="service", auth_type="none")
 
 
 def require_roles(allowed: Sequence[str]):
@@ -759,7 +777,32 @@ def _tool_response_to_payload(response_items: List[Any]) -> Any:
     return parsed
 
 
-async def _invoke_tool(tool_name: str, arguments: Dict[str, Any]) -> ToolInvocationResponse:
+def _enforce_rest_tool_access(tool_name: str, principal: Principal) -> None:
+    """Restrict non-admin REST callers to Janus bridge tools only."""
+    if principal.role == "admin":
+        return
+    if tool_name not in REST_BRIDGE_TOOLS:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=(
+                f"Tool '{tool_name}' is not allowed via REST for role '{principal.role}'. "
+                f"Allowed bridge tools: {', '.join(sorted(REST_BRIDGE_TOOLS))}."
+            ),
+        )
+
+
+def _rest_tools_for_principal(principal: Principal) -> List[str]:
+    if principal.role == "admin":
+        return list(TOOL_NAMES)
+    return [name for name in TOOL_NAMES if name in REST_BRIDGE_TOOLS]
+
+
+async def _invoke_tool(
+    tool_name: str,
+    arguments: Dict[str, Any],
+    principal: Principal,
+) -> ToolInvocationResponse:
+    _enforce_rest_tool_access(tool_name, principal)
     if tool_name not in TOOL_NAMES:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Unknown tool: {tool_name}")
 
@@ -1093,8 +1136,9 @@ async def execute_plugin(
 
 
 @app.get(f"{API_PREFIX}/tools")
-async def list_tools(_: Principal = Depends(require_roles(TOOL_INVOKE_ROLES))) -> Dict[str, Any]:
-    return {"tools": TOOL_NAMES, "count": len(TOOL_NAMES)}
+async def list_tools(principal: Principal = Depends(require_roles(TOOL_INVOKE_ROLES))) -> Dict[str, Any]:
+    tools = _rest_tools_for_principal(principal)
+    return {"tools": tools, "count": len(tools)}
 
 
 @app.post(f"{API_PREFIX}/tools/{{tool_name}}", response_model=ToolInvocationResponse)
@@ -1103,7 +1147,7 @@ async def invoke_tool_generic(
     request: ToolInvocationRequest,
     principal: Principal = Depends(require_roles(TOOL_INVOKE_ROLES)),
 ) -> ToolInvocationResponse:
-    response = await _invoke_tool(tool_name, request.arguments)
+    response = await _invoke_tool(tool_name, request.arguments, principal)
     await _publish_event(
         "tool_invoked",
         {"tool": tool_name, "success": response.success, "subject": principal.subject},
@@ -1116,7 +1160,7 @@ def _tool_endpoint(tool_name: str):
         request: ToolInvocationRequest,
         principal: Principal = Depends(require_roles(TOOL_INVOKE_ROLES)),
     ) -> ToolInvocationResponse:
-        response = await _invoke_tool(tool_name, request.arguments)
+        response = await _invoke_tool(tool_name, request.arguments, principal)
         await _publish_event(
             "tool_invoked",
             {"tool": tool_name, "success": response.success, "subject": principal.subject},

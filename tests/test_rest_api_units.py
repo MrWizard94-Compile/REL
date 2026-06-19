@@ -309,6 +309,7 @@ async def test_get_current_principal_and_roles(monkeypatch: pytest.MonkeyPatch, 
     monkeypatch.setattr(rest_api, "AUTH_REQUIRED", False)
     anon = await rest_api.get_current_principal(token=None, api_key=None)
     assert anon.subject == "anonymous"
+    assert anon.role == "service"
     monkeypatch.setattr(rest_api, "AUTH_REQUIRED", True)
     with pytest.raises(HTTPException):
         await rest_api.get_current_principal(token=None, api_key=None)
@@ -318,6 +319,23 @@ async def test_get_current_principal_and_roles(monkeypatch: pytest.MonkeyPatch, 
     assert ok.role == "admin"
     with pytest.raises(HTTPException):
         await dep(principal=rest_api.Principal(subject="u2", role="member", auth_type="oauth2"))
+
+
+@pytest.mark.asyncio
+async def test_anonymous_tool_access_when_auth_disabled(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(rest_api, "AUTH_REQUIRED", False)
+    anon = await rest_api.get_current_principal(token=None, api_key=None)
+    assert anon.role == "service"
+
+    tool_dep = rest_api.require_roles(rest_api.TOOL_INVOKE_ROLES)
+    allowed = await tool_dep(principal=anon)
+    assert allowed.subject == "anonymous"
+    assert allowed.role == "service"
+
+    tools = await rest_api.list_tools(principal=allowed)
+    assert "tools" in tools
+    assert tools["count"] == len(tools["tools"])
+    assert set(tools["tools"]) == set(rest_api.REST_BRIDGE_TOOLS)
 
 
 def test_tool_response_to_payload_and_discover_names(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -352,23 +370,74 @@ async def test_invoke_tool_paths(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(rest_api.mcp_server, "AUTH_REQUIRED", True)
     monkeypatch.setattr(rest_api.mcp_server, "AUTH_BEARER_TOKEN", "server-token")
 
-    ok = await rest_api._invoke_tool("ok_tool", {"x": 1})
+    admin_principal = rest_api.Principal(subject="admin", role="admin", auth_type="oauth2")
+    ok = await rest_api._invoke_tool("ok_tool", {"x": 1}, admin_principal)
     assert ok.success is True
     assert ok.result["payload"]["auth_token"] == "server-token"
 
-    err = await rest_api._invoke_tool("err_tool", {})
+    err = await rest_api._invoke_tool("err_tool", {}, admin_principal)
     assert err.success is False
 
     with pytest.raises(HTTPException):
-        await rest_api._invoke_tool("missing", {})
+        await rest_api._invoke_tool("missing", {}, admin_principal)
 
     monkeypatch.setattr(rest_api.mcp_server, "AUTH_REQUIRED", False)
     monkeypatch.setattr(rest_api.mcp_server, "AUTH_BEARER_TOKEN", None)
 
 
 @pytest.mark.asyncio
+async def test_rest_bridge_tool_allowlist_blocks_dangerous_tools(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        rest_api,
+        "TOOL_NAMES",
+        ["get_state_summary", "PowerShell", "fs_read_file"],
+    )
+    monkeypatch.setattr(rest_api, "REST_BRIDGE_TOOLS", frozenset(rest_api.DEFAULT_REST_BRIDGE_TOOLS))
+
+    service_principal = rest_api.Principal(subject="svc", role="service", auth_type="api_key")
+
+    with pytest.raises(HTTPException) as exc_info:
+        await rest_api._invoke_tool("PowerShell", {"command": "Get-Process"}, service_principal)
+    assert exc_info.value.status_code == 403
+    assert "PowerShell" in str(exc_info.value.detail)
+
+    async def fake_call(name: str, payload: dict[str, Any]) -> list[Any]:
+        return [SimpleNamespace(text=json.dumps({"tool": name, "ok": True}))]
+
+    monkeypatch.setattr(rest_api.mcp_server, "call_tool", fake_call)
+    allowed = await rest_api._invoke_tool("get_state_summary", {}, service_principal)
+    assert allowed.success is True
+    assert allowed.tool == "get_state_summary"
+
+    admin_principal = rest_api.Principal(subject="admin", role="admin", auth_type="oauth2")
+    admin_result = await rest_api._invoke_tool("PowerShell", {"command": "Get-Process"}, admin_principal)
+    assert admin_result.success is True
+
+    tools = await rest_api.list_tools(principal=service_principal)
+    assert set(tools["tools"]) == {"get_state_summary"}
+    assert "PowerShell" not in tools["tools"]
+
+    admin_tools = await rest_api.list_tools(
+        principal=rest_api.Principal(subject="admin", role="admin", auth_type="oauth2"),
+    )
+    assert "PowerShell" in admin_tools["tools"]
+
+
+def test_load_rest_bridge_tools_from_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("REL_REST_BRIDGE_TOOLS", "get_state_summary, log_session")
+    assert rest_api._load_rest_bridge_tools() == frozenset({"get_state_summary", "log_session"})
+    monkeypatch.delenv("REL_REST_BRIDGE_TOOLS", raising=False)
+    assert rest_api._load_rest_bridge_tools() == frozenset(rest_api.DEFAULT_REST_BRIDGE_TOOLS)
+
+
+@pytest.mark.asyncio
 async def test_tool_endpoint_closure_and_dashboard_activity_non_list_sessions(monkeypatch: pytest.MonkeyPatch) -> None:
-    async def _fake_invoke(tool_name: str, arguments: dict[str, Any]) -> rest_api.ToolInvocationResponse:
+    async def _fake_invoke(
+        tool_name: str,
+        arguments: dict[str, Any],
+        principal: rest_api.Principal,
+    ) -> rest_api.ToolInvocationResponse:
+        _ = principal
         return rest_api.ToolInvocationResponse(
             tool=tool_name,
             success=True,

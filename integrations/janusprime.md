@@ -36,6 +36,17 @@ JanusPrime calls these via `POST /api/v1/tools/{tool_name}`:
 | `load_context` | Orchestrator context pull | `{ "query": "...", "max_tokens": 800 }` |
 | `log_session` | After `janus loop run` | `{ "summary": "...", "achievements": ["..."] }` |
 | `neural_learn` | After successful loop rollup | `{ "text": "JanusPrime loop ..." }` |
+| `get_analytics` | Steward/neural-web rollup | `{}` |
+
+### REST tool allowlist (H1)
+
+Non-admin principals (`service`, `member`, `manager`, and anonymous when auth is disabled) may invoke **only** the bridge tools above via REST. Dangerous orchestrator-only tools — `PowerShell`, filesystem (`fs_*`), desktop/windows bridge tools (`Screenshot`, `Click`, etc.) — return **403 Forbidden** for those roles.
+
+- **Admin** bypasses the allowlist and may call any registered tool.
+- **`GET /api/v1/tools`** lists only allowed bridge tools for non-admin callers.
+- Override the allowlist with `REL_REST_BRIDGE_TOOLS` (comma-separated tool names). Default:
+
+  `get_state_summary,load_context,log_session,neural_learn,get_analytics`
 
 ## Authentication
 
@@ -63,7 +74,7 @@ docker compose up -d
 - Data volume: `REL_DATA_PATH` env (default `C:/REL_Codex_Variant/data`)
 - Steward Ollama: `OLLAMA_BASE_URL=http://ollama:11434` inside the stack
 
-Point `janus.config.json` at `http://localhost:8080`. For local dev, JanusPrime compose sets `REL_API_AUTH_REQUIRED=false` by default.
+Point `janus.config.json` at `http://localhost:8080`. For local dev, JanusPrime compose sets `REL_API_AUTH_REQUIRED=false` by default — unauthenticated requests get an anonymous principal with **service** role so bridge tools (`/api/v1/tools/*`) work without an API key.
 
 ### Standalone (two terminals)
 

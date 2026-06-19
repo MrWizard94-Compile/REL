@@ -16,6 +16,7 @@ External: Ollama running at localhost:11434 with qwen3:4b-instruct pulled
 
 import json
 import logging
+import os
 import sys
 import time
 import urllib.request
@@ -29,8 +30,8 @@ logger = logging.getLogger("REL.Steward")
 # Configuration
 # ---------------------------------------------------------------------------
 
-OLLAMA_BASE_URL = "http://localhost:11434"
-OLLAMA_MODEL = "qwen3:4b-instruct"
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3:4b-instruct")
 OLLAMA_TIMEOUT_SECONDS = 45
 
 EXTRACTION_SYSTEM_PROMPT = """You are a concept extraction engine for a personal knowledge system.
