@@ -2,7 +2,7 @@
 """
 REL Steward — Local LLM-powered neural web maintenance agent.
 
-Uses Qwen3-4B-Instruct via Ollama to:
+Uses qwen2.5-coder:7b via Ollama to:
   1. Extract domain-specific concepts from session summaries (replacing naive regex extraction)
   2. Run periodic maintenance (decay, noise pruning, reindexing)
   3. Batch-reprocess historical sessions to fix existing noise
@@ -11,7 +11,7 @@ Designed to be imported by mcp_server.py for real-time concept extraction,
 or run standalone for maintenance tasks.
 
 Dependencies: requests (stdlib-compatible via urllib), json, logging
-External: Ollama running at localhost:11434 with qwen3:4b-instruct pulled
+External: Ollama running at localhost:11434 with qwen2.5-coder:7b pulled
 """
 
 import json
@@ -31,7 +31,7 @@ logger = logging.getLogger("REL.Steward")
 # ---------------------------------------------------------------------------
 
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen3:4b-instruct")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "qwen2.5-coder:7b")
 OLLAMA_TIMEOUT_SECONDS = 45
 
 EXTRACTION_SYSTEM_PROMPT = """You are a concept extraction engine for a personal knowledge system.

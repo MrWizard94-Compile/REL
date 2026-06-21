@@ -1,22 +1,22 @@
 Total unique tools registered: 88
 
-  1. App
+  1. AppLaunch
   2. Click
   3. Clipboard
-  4. Move
-  5. MultiEdit
-  6. MultiSelect
-  7. Notification
-  8. PowerShell
-  9. Process
- 10. Registry
- 11. Scrape
- 12. Screenshot
- 13. Scroll
- 14. Shortcut
- 15. Snapshot
- 16. Type
- 17. Wait
+  4. DeskSnapshot
+  5. Move
+  6. MultiClick
+  7. MultiEdit
+  8. Notification
+  9. PauseSec
+ 10. PowerShell
+ 11. Process
+ 12. Registry
+ 13. Screenshot
+ 14. Scroll
+ 15. Shortcut
+ 16. TypeText
+ 17. WebScrape
  18. WinFileSystem
  19. add_blocker
  20. add_dependency

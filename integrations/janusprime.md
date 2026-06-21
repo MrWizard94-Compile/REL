@@ -116,7 +116,7 @@ node packages/cli/dist/bin.js janus rel status
 node packages/cli/dist/bin.js janus loop run -t <parentId>
 ```
 
-Shared Ollama (`:11434`): Smart-Library uses `qwen2.5-coder:7b`; REL steward uses `qwen3:4b-instruct`.
+Shared Ollama (`:11434`): a single shared model — `qwen2.5-coder:7b` — powers both Smart-Library query synthesis and REL steward concept extraction.
 
 ## Configuration (JanusPrime)
 
